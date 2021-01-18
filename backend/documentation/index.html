@@ -1,0 +1,2514 @@
+<html>
+  <head>
+    <title>Documentação - API Severino</title>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "Open Sans";
+        font-size: 14.5px;
+      }
+
+      strong {
+        font-weight: bold;
+      }
+
+      .mb-0 {
+        margin-bottom: 0;
+      }
+
+      .param {
+        background-color: #2b66a4;
+        color: #fff;
+        padding: 0 0.8rem;
+        border-radius: 5px;
+      }
+
+      .get {
+        background-color: #1caa00;
+      }
+      .post {
+        background-color: #17858d;
+      }
+      .put {
+        background-color: #9830a1;
+      }
+      .delete {
+        background-color: #ff2148;
+      }
+      .get,
+      .post,
+      .delete,
+      .put {
+        color: #fff;
+        padding: 0.1rem 1rem;
+        border-radius: 5px;
+      }
+
+      .resource {
+        font-weight: bold;
+        letter-spacing: 1.5px;
+      }
+
+      .type,
+      .query-param {
+        color: #ff2148;
+      }
+
+      .requirement {
+        color: grey;
+        font-size: 12px;
+      }
+
+      #sidenav li {
+        font-weight: bold;
+        padding: 0.5rem 0;
+      }
+
+      #sidenav {
+        position: fixed;
+        overflow-y: scroll;
+        max-height: 80%;
+        width: 235px;
+        overflow: auto;
+      }
+
+      .block {
+        background-color: #f3f3f3;
+        padding: 1rem;
+        border: 1px solid #e7e7e7;
+        border-radius: 5px;
+        margin-bottom: 3rem;
+      }
+
+      pre {
+        padding: 0.5rem;
+        margin: 0;
+        font-size: 0.88rem;
+        justify-content: left;
+      }
+
+      .default {
+        font-size: 0.8rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row" style="margin-top: 5%;">
+        <div class="col s12 center">API Severino</div>
+      </div>
+
+      <div class="row">
+        <!-- Sidenav -->
+        <div class="col s3">
+          <ul id="sidenav" >
+            <li><h4>Recursos</h4></li>
+            <div class="divider"></div>
+            <li><h6>Token</h6></li>
+            <div class="divider"></div>
+            <li>POST <a href="#login">/login</a></li>
+            <div class="divider"></div>
+            <li><h6>Cliente</h6></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-clients">/users/clients</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-clients">/users/clients</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-client">/users/client/id</a></li>
+            <div class="divider"></div>
+            <li>PUT <a href="#put-client">/users/client/id</a></li>
+            <div class="divider"></div>
+            <li>DELETE <a href="#del-client">/users/client/id</a></li>
+            <div class="divider"></div>
+            <li><h6>Favoritos</h6></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-favorites">/users/favorites</a></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-favorites">/users/favorites/id</a></li>
+            <div class="divider"></div>
+            <li>DELETE <a href="#del-favorites">/users/favorites/id</a></li>
+            <div class="divider"></div>
+            <li><h6>Prestador</h6></li>
+            <li>POST <a href="#post-providers">/users/providers</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-providers">/users/providers</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-provider">/users/provider/id</a></li>
+            <div class="divider"></div>
+            <li>PUT <a href="#put-provider">/users/provider/id</a></li>
+            <div class=divider></div>
+            <li>DELETE <a href="#del-provider">/users/provider/id</a></li>
+            <div class="divider"></div>
+            <li><h6>Serviços</h6></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-services">/services</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-services">/services</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-service">/service/id</a></li>
+            <div class="divider"></div>
+            <li><h6>Prestador - Serviços</h6></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-providers-services">/users/provider/service</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-providers-services">/users/providers/services</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-provider-service">/provider-service?provider_id=xx&&service_id=xx</a></li>
+            <div class="divider"></div>
+            <li>DELETE <a href="#del-provider-service">/provider-service?provider_id=xx&&service_id=xx</a></li>
+            <div class="divider"></div>
+            <li><h6>Comentarios</h6></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-coments">/coments</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-coments">/coments</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-coment">/coment/id</a></li>
+            <div class="divider"></div>
+            <li><h6>Endereços</h6></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-adresses">/users/client/adresses</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-adresses">/users/client/id/adresses</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-adress">/users/client/adress/id</a></li>
+            <div class="divider"></div>
+            <li>DELETE <a href="#del-adress">/users/client/adress/id</a></li>
+            <div class="divider"></div>
+            <li>PUT <a href="#put-adress">/users/client/adress/id</a></li>
+            <div class="divider"></div>
+            <li><h6>Chat</h6></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-chat">/chat</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-chat">/chat</a></li>
+            <div class="divider"></div>
+            <li>PUT <a href="#put-chat">/chat/id</a></li>
+            <div class="divider"></div>
+            <li><h6>Agenda</h6></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-schedules">/schedules</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-schedules">/schedules</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-schedule">/schedule</a></li>
+            <div class="divider"></div>
+            <li>PUT <a href="#put-schedule">/schedule</a></li>
+            <div class="divider"></div>
+            <li>DELETE <a href="#del-schedule">/schedule</a></li>
+            <div class="divider"></div>
+            <li><h6>Produtos</h6></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-products">/products</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-products">/products</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-product">/product/id</a></li>
+            <div class="divider"></div>
+            <li>PUT <a href="#put-product">/product/id</a></li>
+            <div class="divider"></div>
+            <li><h6>Ordem de serviço</h6></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-os">/os</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-os">/os</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-os-id">/os/id</a></li>
+            <div class="divider"></div>
+            <li>PUT <a href="#put-os">/os/id</a></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-os-products">/os/products</a></li>
+            <div class="divider"></div>
+            <li>DELETE <a href="#del-os-products">/os/products</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-os-products">/os/id/products</a></li>
+            <div class="divider"></div>
+            <li><h6>Horario de trabalho</h6></li>
+            <div class="divider"></div>
+            <li>POST <a href="#post-working">/users/provider/working_yours</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-working">/users/provider/:id/working_yours</a></li>
+            <div class="divider"></div>
+            <li>GET <a href="#get-working-one">/users/provider/working_yours/:id</a></li>
+            <div class="divider"></div>
+            <li>PUT <a href="#put-working">/users/provider/working_yours/:id</a></li>
+            <div class="divider"></div>
+            <li>DELETE <a href="#del-working">/users/provider/working_yours/:id</a></li>
+          </ul>
+        </div>
+        
+        <!-- Content -->
+        <div class="col s9">
+          <!-- POST /login
+            ==============================-->
+          <div class="block">
+            <!-- Resource Title -->
+            <div id="login"></div>
+
+            <!-- Resource Parameters -->
+            <div id="login"></div>
+
+            <!-- Example -->
+            <div class="row mb-0">
+              <div class="col s12">
+                <p>
+                  Esse endpoint é responsavel por autentificar o usuario e
+                  retorna o id, username, type_user, token.
+                </p>
+                <p><strong>Exemplo:</strong></p>
+                <pre>
+                  <code>
+                    http:localhost:2000/login
+                  </code>
+                </pre>
+              </div>
+              <div class="col s12">
+                <p><strong>Retorno:</strong></p>
+                <pre>
+                  <code>
+                    {
+                      "id": 1,
+                      "username": "Eduardo",
+                      "type_user": "client",
+                      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUE"
+                    }
+                  </code>
+                </pre>
+              </div>
+            </div>
+        
+
+          <!--  POST /users/clients
+            ==============================-->
+          <div class="block">
+            <!-- Resource Title -->
+            <div id="post-clients"></div>
+
+            <!-- Resource Parameters -->
+            <div id="post-clients-content"></div>
+
+            <!-- Example -->
+            <div class="row mb-0">
+              <div class="col s12">
+                <p>
+                  Esse endpoint é responsavel pela inserção de um registro de
+                  usuario do tipo cliente no banco de dados e envio de e-mail de
+                  confirmação.
+                </p>
+                <p><strong>Exemplo:</strong></p>
+
+                <pre>
+                  <code>
+                    http:localhost:2000/users/clients
+                  </code>
+                </pre>
+              </div>
+              <div class="col s12">
+                <p><strong>Retorno:</strong></p>
+                <pre>
+                  <code>
+                    Status 204 - No Content
+                  </code>
+                </pre>
+              </div>
+            </div>
+          </div>
+
+          <!--  GET /users/client/:id
+            ==============================-->
+          <div class="block">
+            <!-- Resource Title -->
+            <div id="get-clients"></div>
+
+            <!-- Resource Parameters -->
+            <div id="get-clients-content"></div>
+
+            <!-- Example -->
+            <div class="row mb-0">
+              <div class="col s12">
+                <p>Busca todos os clientes no banco de dados.</p>
+                <p><strong>Exemplo:</strong></p>
+                <pre>
+                  <code>
+                      http://localhost:2000/users/clients
+                  </code>
+                </pre>
+              </div>
+              <div class="col s12">
+                <p><strong>Retorno:</strong></p>
+                <pre>
+                  <code>
+                    {
+                      "clients": [
+                          {
+                              "id": 1,
+                              "contact": "eduardo",
+                              "login": "edu.slhenrique@gmail.com",
+                              "password": "$2a$10$WNgKOjVgQ/,
+                              "type_user": "client",
+                              "create_at": "2020-07-29T22:46:53.137Z",
+                              "birth": "2000-07-25T03:00:00.000Z",
+                              "username": "Eduardo",
+                              "cpf_cnpj": "144.146.628-60",
+                              "rg": "15254844445",
+                              "street": "Paulo Fernandez de Carvalho",
+                              "n_house": 960,
+                              "neighborhood": "Chacaras São Paulo",
+                              "zip_code": "14406-608",
+                              "city": "Franca",
+                              "uf": "SP",
+                              "complement": "",
+                              "picture": "http://localhost:2000/public/
+                                            profile_photos/xxx.jpg",
+                              "company": false,
+                              "status_login": true,
+                              "status_active": "active",
+                              "checked": false
+                          },
+                          {
+                              "id": 5,
+                              "contact": "eduardo",
+                              "login": "edu.slhenrique1@gmail.com",
+                              "password": "$2a$10$q46bxe6S3/r1",
+                              "type_user": "client",
+                              "create_at": "2020-07-29T22:58:22.980Z",
+                              "birth": "2000-07-25T03:00:00.000Z",
+                              "username": "Eduardo",
+                              "cpf_cnpj": "144.146.628-60",
+                              "rg": "15254844445",
+                              "street": "Paulo Fernandez de Carvalho",
+                              "n_house": 960,
+                              "neighborhood": "Chacaras São Paulo",
+                              "zip_code": "14406-608",
+                              "city": "Franca",
+                              "uf": "SP",
+                              "complement": "",
+                              "picture": null,
+                              "company": false,
+                              "status_login": true,
+                              "status_active": "active",
+                              "checked": false
+                          }
+                      ]
+                  }
+                  </code>
+                </pre>
+              </div>
+            </div>
+          </div>
+
+          <!--  GET /users/clients/:id
+            ==============================-->
+          <div class="block">
+            <!-- Resource Title -->
+            <div id="get-client"></div>
+
+            <!-- Resource Parameters -->
+            <div id="get-client-content"></div>
+
+            <!-- Example -->
+            <div class="row mb-0">
+              <div class="col s12">
+                <p>Busca um cliente pelo id passado no parametro.</p>
+                <p><strong>Exemplo:</strong></p>
+                <pre>
+                  <code>
+                      http://localhost:2000/users/client/1
+                  </code>
+                </pre>
+              </div>
+              <div class="col s12">
+                <p><strong>Retorno:</strong></p>
+                <pre>
+                  <code>
+                    {
+                      "client": [
+                          {
+                              "id": 1,
+                              "contact": "eduardo",
+                              "login": "edu.slhenrique@gmail.com",
+                              "password": "$2a$10$WNgKOjVgQ/mXfO",
+                              "type_user": "client",
+                              "create_at": "2020-07-29T22:46:53.137Z",
+                              "birth": "2000-07-25T03:00:00.000Z",
+                              "username": "Eduardo",
+                              "cpf_cnpj": "144.146.628-60",
+                              "rg": "15254844445",
+                              "street": "Paulo Fernandez de Carvalho",
+                              "n_house": 960,
+                              "neighborhood": "Chacaras São Paulo",
+                              "zip_code": "14406-608",
+                              "city": "Franca",
+                              "uf": "SP",
+                              "complement": "",
+                              "picture": null,
+                              "company": false,
+                              "status_login": true,
+                              "status_active": "active",
+                              "checked": false
+                          }
+                      ]
+                  }
+                  </code>
+                </pre>
+              </div>
+            </div>
+          </div>
+
+          <!--  PUT  /users/client/:id
+            ==============================-->
+          <div class="block">
+            <!-- Resource Title -->
+            <div id="put-client"></div>
+
+            <!-- Resource Parameters -->
+            <div id="put-client-content"></div>
+
+            <!-- Example -->
+            <div class="row mb-0">
+              <div class="col s12">
+                <p>
+                  Atualiza o cliente com o id passado na rota conforme
+                  parametros
+                </p>
+                <p><strong>Exemplo:</strong></p>
+                <pre>
+                    <code>
+                        http://localhost:2000/users/client/1
+                    </code>
+                  </pre>
+              </div>
+              <div class="col s12">
+                <p><strong>Retorno:</strong></p>
+                <pre>
+                    <code>
+                      Status 204 - No Content
+                    </code>
+                  </pre>
+              </div>
+            </div>
+          </div>
+
+          <!--  DELETE  /users/client/:id
+            ==============================-->
+          <div class="block">
+            <!-- Resource Title -->
+            <div id="del-client"></div>
+
+            <!-- Resource Parameters -->
+            <div id="del-client-content"></div>
+
+            <!-- Example -->
+            <div class="row mb-0">
+              <div class="col s12">
+                <p>
+                  Deleta o cliente com o id passado na rota.
+                </p>
+                <p><strong>Exemplo:</strong></p>
+                <pre>
+                    <code>
+                        http://localhost:2000/users/client/1
+                    </code>
+                  </pre>
+              </div>
+              <div class="col s12">
+                <p><strong>Retorno:</strong></p>
+                <pre>
+                    <code>
+                      Status 204 - No Content
+                    </code>
+                  </pre>
+              </div>
+            </div>
+          </div>
+
+          <!--  POST  /users/providers
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-providers"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-providers-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Esse endpoint é responsavel pela inserção de um registro de usuario do tipo prestador no banco de dados e envio de e-mail de confirmação.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/providers
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            <!--  GET  /users/providers
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-providers"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-providers-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Esse endpoint é responsavel por retornar todos os prestadores.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/providers
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "providers": [
+                              {
+                                  "id": 1,
+                                  "validate": true,
+                                  "bank_agency": "154848",
+                                  "bank_account": "5161548541-9",
+                                  "n_bank": "511515",
+                                  "name_bank": "NU",
+                                  "boost": false,
+                                  "name_mom": "Marcia",
+                                  "login": "edu.slhenrique@gmail.com",
+                                  "password": "$2a$10$Xqhe3nvWzSPGvDziaS.eATlYp5IZUTn6",
+                                  "type_user": "provider_company",
+                                  "create_at": "2020-08-01T14:23:31.046Z",
+                                  "birth": "2000-07-25T03:00:00.000Z",
+                                  "username": "Eduardo",
+                                  "cpf_cnpj": "144.146.628-60",
+                                  "rg": "15254844445",
+                                  "street": "Paulo Fernandez de Carvalho",
+                                  "n_house": 960,
+                                  "neighborhood": "Chacaras São Paulo",
+                                  "zip_code": "14406-608",
+                                  "city": "Franca",
+                                  "uf": "SP",
+                                  "complement": "",
+                                  "picture": null,
+                                  "company": false,
+                                  "status_login": true,
+                                  "status_active": "active",
+                                  "checked": false
+                              },
+                              {
+                                  "id": 2,
+                                  "validate": true,
+                                  "bank_agency": "154848",
+                                  "bank_account": "5161548541-9",
+                                  "n_bank": "511515",
+                                  "name_bank": "NU",
+                                  "boost": false,
+                                  "name_mom": "Marcia",
+                                  "login": "teste@gmail.com",
+                                  "password": "$2a$10$GnkD937y",
+                                  "type_user": "provider_company",
+                                  "create_at": "2020-08-01T14:43:26.386Z",
+                                  "birth": "2000-07-25T03:00:00.000Z",
+                                  "username": "Eduardo",
+                                  "cpf_cnpj": "144.146.628-60",
+                                  "rg": "15254844445",
+                                  "street": "Paulo Fernandez de Carvalho",
+                                  "n_house": 960,
+                                  "neighborhood": "Chacaras São Paulo",
+                                  "zip_code": "14406-608",
+                                  "city": "Franca",
+                                  "uf": "SP",
+                                  "complement": "",
+                                  "picture": null,
+                                  "company": false,
+                                  "status_login": true,
+                                  "status_active": "active",
+                                  "checked": false
+                              }
+                          ]
+                      }
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+                      <!--  GET  /users/provider/id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-provider"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-provider-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Esse endpoint é responsavel por retornar um unico prestador.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/provider/2
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "provider": [
+                              {
+                                  "id": 2,
+                                  "validate": true,
+                                  "bank_agency": "154848",
+                                  "bank_account": "5161548541-9",
+                                  "n_bank": "511515",
+                                  "name_bank": "NU",
+                                  "boost": false,
+                                  "name_mom": "Marcia",
+                                  "login": "teste@gmail.com",
+                                  "password": "$2a$10$GnkD9LY4dIwj7.55mwCB0.ENfIma4tAxdr",
+                                  "type_user": "provider_company",
+                                  "create_at": "2020-08-01T14:43:26.386Z",
+                                  "birth": "2000-07-25T03:00:00.000Z",
+                                  "username": "Eduardo",
+                                  "cpf_cnpj": "144.146.628-60",
+                                  "rg": "15254844445",
+                                  "street": "Paulo Fernandez de Carvalho",
+                                  "n_house": 960,
+                                  "neighborhood": "Chacaras São Paulo",
+                                  "zip_code": "14406-608",
+                                  "city": "Franca",
+                                  "uf": "SP",
+                                  "complement": "",
+                                  "picture": null,
+                                  "company": false,
+                                  "status_login": true,
+                                  "status_active": "active",
+                                  "checked": false
+                              }
+                          ]
+                      }
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+                                  <!--  PUT  /users/provider/id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="put-provider"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="put-provider-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Esse endpoint é responsavel por atualizar dados de um prestador.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/provider/2
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+            
+            <!--  DELETE  /users/client/:id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="del-provider"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="del-provider-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Deleta o prestador com o id passado na rota.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/provider/2
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            <!--  POST  /services
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-services"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-services-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Cadastra um novo serviço no banco de dados.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/services
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            <!--  GET  /services
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-services"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-services-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                   Retorna todos os serviços
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/services
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "services": [
+                              {
+                                  "id": 1,
+                                  "title_service": "Pintor",
+                                  "description": "Pintor de residencias"
+                              },
+                              {
+                                  "id": 2,
+                                  "title_service": "Eletricista",
+                                  "description": "Serviços gerais de cabeamento"
+                              }
+                          ]
+                        }
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            <!--  GET  /service/id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-service"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-service-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                   Retorna o serviço com id informado na requisição.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/service/2
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "service": [
+                              {
+                                  "id": 2,
+                                  "title_service": "Eletricista",
+                                  "description": "Serviços gerais de cabeamento"
+                              }
+                          ]
+                        }
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+
+            
+            <!--  POST  /users/provider/service
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-providers-services"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-providers-services-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                   Associa um prestador a um serviço.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/providers/services
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            <!--  GET  /users/provider/service
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-providers-services"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-providers-services-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                   Recupera todas associassões entre prestadores e serviços
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/providers/services
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "service_provider": [
+                              {
+                                  "username": "Eduardo",
+                                  "title_service": "Eletricista",
+                                  "description": "Serviços gerais de cabeamento",
+                                  "rate": 0
+                              },
+                              {
+                                  "username": "Eduardo",
+                                  "title_service": "Pintor",
+                                  "description": "Pintor de residencias",
+                                  "rate": 0
+                              },
+                              {
+                                  "username": "Eduardo",
+                                  "title_service": "Eletricista",
+                                  "description": "Serviços gerais de cabeamento",
+                                  "rate": 0
+                              },
+                              {
+                                  "username": "Eduardo",
+                                  "title_service": "Pintor",
+                                  "description": "Pintor de residencias",
+                                  "rate": 0
+                              },
+                              {
+                                  "username": "Eduardo",
+                                  "title_service": "Eletricista",
+                                  "description": "Serviços gerais de cabeamento",
+                                  "rate": 0
+                              }
+                          ]
+                        }                      
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            
+            <!--  GET  /provider-service?
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-provider-service"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-provider-service-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                     Recupera todas associassões entre prestadores e serviços conforme os parametros na query. Pelo menos um dos parametros da query deve ser passado.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/provider-service?provider_id=2
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "service_provider": [
+                              {
+                                  "id_user": 2,
+                                  "service_id": 1,
+                                  "username": "Eduardo",
+                                  "title_service": "Pintor",
+                                  "description": "Pintor de residencias",
+                                  "rate": 0
+                              },
+                              {
+                                  "id_user": 2,
+                                  "service_id": 2,
+                                  "username": "Eduardo",
+                                  "title_service": "Eletricista",
+                                  "description": "Serviços gerais de cabeamento",
+                                  "rate": 0
+                              }
+                          ]
+                        }                   
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+          <!--  DELETE  /provider-service?
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="del-provider-service"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="del-provider-service-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                     Recupera todas associassões entre prestadores e serviços conforme os parametros na query. Pelo menos um dos parametros da query deve ser passado.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/provider-service?provider_id=2
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "service_provider": [
+                              {
+                                  "id_user": 2,
+                                  "service_id": 1,
+                                  "username": "Eduardo",
+                                  "title_service": "Pintor",
+                                  "description": "Pintor de residencias",
+                                  "rate": 0
+                              },
+                              {
+                                  "id_user": 2,
+                                  "service_id": 2,
+                                  "username": "Eduardo",
+                                  "title_service": "Eletricista",
+                                  "description": "Serviços gerais de cabeamento",
+                                  "rate": 0
+                              }
+                          ]
+                        }                   
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+             <!--  POST  /coments
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-coments"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-coments-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Insere um comentario referente a um prestador
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/coments
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content                   
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+             <!--  GET  /coments
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-coments"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-coments-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Recupera todos os comentarios referente a um prestador
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/coments
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "coments": [
+                              {
+                                  "id_coment": 2,
+                                  "client": "Fulano",
+                                  "provider": "Eduardo",
+                                  "coment": "Bom trabalhador, recomendo",
+                                  "date": "2020-08-02T13:04:35.551Z"
+                              },
+                              {
+                                  "id_coment": 3,
+                                  "client": "Fulano",
+                                  "provider": "Eduardo",
+                                  "coment": "Top",
+                                  "date": "2020-08-02T13:15:59.356Z"
+                              }
+                          ]
+                        }         
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            
+             <!--  GET  /coments
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-coment"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-coment-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Busca e retorna um comentario conforme id.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/coment/2
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "coment": [
+                              {
+                                  "id_coment": 2,
+                                  "client": "Fulano",
+                                  "provider": "Eduardo",
+                                  "coment": "Bom trabalhador, recomendo",
+                                  "date": "2020-08-02T13:04:35.551Z"
+                              }
+                          ]
+                        }         
+                      </code>
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            <!--  POST  /users/client/adresses
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-adresses"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-adresses-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Cadastra um novo endereço relacionado ao cliente.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/client/adresses
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content                   
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+               <!--  GET /users/client/:id/adresses
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-adresses"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-adresses-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Retorna todos os endereços cadastrados do cliente com o id passado por parametro.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/client/5/adresses
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "adresses": [
+                              {
+                                  "id": 1,
+                                  "id_client": 5,
+                                  "street": "Paulo Fernandez de Carvalho",
+                                  "n_house": 960,
+                                  "neighborhood": "Chacaras São Paulo",
+                                  "zip_code": "14406608",
+                                  "city": "Franca",
+                                  "uf": "SP",
+                                  "complement": null
+                              }
+                          ]
+                        }                  
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            
+               <!--  GET /users/client/:id/adresses
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-adress"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-adress-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Retorna um endereço conforme id passado no parametro.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/client/adress/1
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "adress": [
+                              {
+                                  "id": 1,
+                                  "id_client": 5,
+                                  "street": "Paulo Fernandez de Carvalho",
+                                  "n_house": 960,
+                                  "neighborhood": "Chacaras São Paulo",
+                                  "zip_code": "14406608",
+                                  "city": "Franca",
+                                  "uf": "SP",
+                                  "complement": null
+                              }
+                          ]
+                        }                
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            <!--  DELETE /users/client/:id/adresses
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="del-adress"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="del-adress-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Deleta um endereço conforme id passado no parametro.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/client/adress/1
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content                       
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            <!--  PUT /users/client/:id/adresses
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="put-adress"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="put-adress-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Atualiza um endereço conforme parametros.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/client/adress/1
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content                       
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+           <!--  POST /chat
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-chat"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-chat-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Envio de mensagem no chat.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/chat
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content                       
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+ <!--  GET /chat
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-chat"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-chat-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Recupera todas as mensagens do usuario logado.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/chat
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "messages": [
+                              {
+                                  "id": 5,
+                                  "username": "Eduardo",
+                                  "message": "Ola",
+                                  "message_received": false,
+                                  "date_received": null,
+                                  "date_send": "2020-08-08T14:20:23.392-03:00",
+                                  "midia": null
+                              },
+                              {
+                                  "id": 6,
+                                  "username": "Eduardo",
+                                  "message": "Ola",
+                                  "message_received": false,
+                                  "date_received": null,
+                                  "date_send": "2020-08-08T14:20:58.361-03:00",
+                                  "midia": "http://localhost:2000/uploads/chats/c18952b8f7d0-Capturar.PNG"
+                              }
+                          ]
+                        }                  
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+            <!--  PUT /chat
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="put-chat"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="put-chat-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Altera os dados de recebimento
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/chat/6
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content                  
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+          <!--  POST /schedules
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-schedules"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-schedules-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Cadastra um agendamento
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/schedules
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content                  
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+
+            <!--  GET /schedules
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-schedules"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-schedules-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Busca todos agendamentos com referencia ao usuario logado no momento.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/schedules
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "schedules": [
+                              {
+                                  "id": 1,
+                                  "date": "2020-08-28T03:00:00.000Z",
+                                  "hour": "13:00:00",
+                                  "description": "Vou pintar a casa dessa querida senhora",
+                                  "user_notified": false,
+                                  "prestador": "Eduardo",
+                                  "city": "Franca",
+                                  "street": "Paulo Fernandez de Carvalho",
+                                  "n_house": 960,
+                                  "zip_code": "14406608",
+                                  "cliente": "eduardo"
+                              }
+                          ]
+                        }                 
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            <!--  GET /schedule
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-schedule"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-schedule-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Busca um agendamento por id
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/schedules/1
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "schedule": [
+                              {
+                                  "id": 1,
+                                  "date": "2020-08-28T03:00:00.000Z",
+                                  "hour": "13:00:00",
+                                  "description": "Vou pintar a casa dessa querida senhora",
+                                  "user_notified": false,
+                                  "prestador": "Eduardo",
+                                  "city": "Franca",
+                                  "street": "Paulo Fernandez de Carvalho",
+                                  "n_house": 960,
+                                  "zip_code": "14406608",
+                                  "cliente": "eduardo"
+                              }
+                          ]
+                        }                 
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+          <!--  PUT /schedule/:id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="put-schedule"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="put-schedule-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Atualiza um agendamento, conforme dados passado por parametro.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/schedule/1
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content                  
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            <!--  DELETE /schedule/:id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="del-schedule"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="del-schedule-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Deleta um agendamento, conforme id passado por parametro.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/schedule/1
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content                  
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+
+     
+          <!--  POST /products
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-products"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-products-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Cadastra novo produto.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/products
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content        
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            <!--  GET /products
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-products"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-products-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Busca todos produtos.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/products
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "products": [
+                              {
+                                  "id": 1,
+                                  "description": "Tinta",
+                                  "status": 1
+                              },
+                              {
+                                  "id": 2,
+                                  "description": "Cimento",
+                                  "status": 1
+                              }
+                          ]
+                        }      
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+        <!--  GET /product/id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-product"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-product-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Busca um produto por id.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/product/2
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "product": [
+                              {
+                                  "id": 2,
+                                  "description": "Cimento",
+                                  "status": 1
+                              }
+                          ]
+                        }      
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+              <!--  PUT /product/id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="put-product"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="put-product-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Atualiza um produto.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/product/2
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content     
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+
+                   <!--  POST /os
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-os"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-os-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Gera Ordem de Serviço
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/os
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content                  
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            
+                        <!--  GET /os/
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-os"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-os-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Busca ordens de serviço do usuario logado
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/os
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "os": [
+                              {
+                                  "id": 3,
+                                  "status_os": "pendent",
+                                  "open_date": "2020-08-16T03:00:00.000Z",
+                                  "description": "Manutenção de rede eletrica",
+                                  "prestador": "Eduardo",
+                                  "cliente": "Eduardo",
+                                  "contact": "eduardo",
+                                  "value_manpower": 150,
+                                  "valor_material": null,
+                                  "value_total": 150
+                              }
+                          ]
+                        }          
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+                                   <!--  GET /os/:id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-os-id"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-os-id-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Busca ordem de serviço conforme id.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/os/3
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "os": [
+                              {
+                                  "id": 3,
+                                  "status_os": "pendent",
+                                  "open_date": "2020-08-16T03:00:00.000Z",
+                                  "description": "Manutenção de rede eletrica",
+                                  "prestador": "Eduardo",
+                                  "cliente": "Eduardo",
+                                  "contact": "eduardo",
+                                  "value_manpower": 150,
+                                  "valor_material": null,
+                                  "value_total": 150
+                              }
+                          ]
+                        }          
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+                                               <!--  GET /os/:id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="put-os"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="put-os-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Atualiza ordem de serviço conforme parametros.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/os/3
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content        
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+            
+          <!--  POST /os/products
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-os-products"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-os-product-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Adiciona produto a ordem de serviço.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/os/products
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content        
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+           <!--  DEL /os/products
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="del-os-products"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="del-os-product-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Remove produto da ordem de serviço.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/os/products
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content        
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+
+
+            
+      <!--  GET /os/products
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-os-products"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-os-product-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Busca todos produtos da ordem de serviço.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/os/1/products
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        {
+                          "products": [
+                              {
+                                  "id": 1,
+                                  "status_os": "pendent",
+                                  "amount": 2,
+                                  "value_unitary": 50,
+                                  "value_totaly": 100,
+                                  "description": "Tinta"
+                              },
+                              {
+                                  "id": 2,
+                                  "status_os": "pendent",
+                                  "amount": 2,
+                                  "value_unitary": 50,
+                                  "value_totaly": 100,
+                                  "description": "Cimento"
+                              },
+                              {
+                                  "id": 3,
+                                  "status_os": "pendent",
+                                  "amount": 2,
+                                  "value_unitary": 50,
+                                  "value_totaly": 100,
+                                  "description": "Cimento1"
+                              },
+                              {
+                                  "id": 4,
+                                  "status_os": "pendent",
+                                  "amount": 3,
+                                  "value_unitary": 300,
+                                  "value_totaly": 900,
+                                  "description": "Cimento12"
+                              }
+                          ]
+                        }       
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+            <!--  GET /users/favorites
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-favorites"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-favorites-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Busca todos os favoritos do cliente logado atualmente.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http:localhost:2000/user/favorites
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        [
+                          {
+                              "id_client": 2,
+                              "id_provider": 4
+                          }
+                        ]
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+                 <!--  POST /users/favorites
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-favorites"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-favorites-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Cadastra novo favorito ao cliente logado atualmente.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http:localhost:2000/user/favorites/6
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content        
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+     <!--  DEL /users/favorites
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="del-favorites"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="del-favorites-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Remove prestador favorito ao cliente logado atualmente.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http:localhost:2000/user/favorites/6
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content        
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+
+            <!--  GET /users/favorites
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-working"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-working-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Busca todos horarios de trabalho de um prestador.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/provider/4/working_yours/
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        [
+                          {
+                            "id": 1,
+                            "id_provider": 4,
+                            "day_of_week": "Segunda",
+                            "start_time": "07:00:00",
+                            "final_hour": "17:00:00"
+                          },
+                          {
+                            "id": 2,
+                            "id_provider": 4,
+                            "day_of_week": "Terça",
+                            "start_time": "07:00:00",
+                            "final_hour": "17:00:00"
+                          },
+                        ]
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+
+                  <!--  POST /users/provider/working_yours
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="post-working"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="post-working-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Cadastra horarios de trabalho de um prestador.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/provider/working_yours/
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content        
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+                 <!--  get /users/provider/working_yours/id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="get-working-one"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="get-working-one-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Busca horarios de trabalho pelo id.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/provider/working_yours/1
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        [
+                          {
+                            "id": 1,
+                            "id_provider": 4,
+                            "day_of_week": "Segunda",
+                            "start_time": "07:00:00",
+                            "final_hour": "17:00:00"
+                          }
+                        ]     
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+          <!--  del /users/provider/working_yours/id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="del-working"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="del-working-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Deleta horarios de trabalho pelo id.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/provider/working_yours/1
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content        
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+             <!--  put /users/provider/working_yours/id
+            ==============================-->
+            <div class="block">
+              <!-- Resource Title -->
+              <div id="put-working"></div>
+  
+              <!-- Resource Parameters -->
+              <div id="put-working-content"></div>
+  
+              <!-- Example -->
+              <div class="row mb-0">
+                <div class="col s12">
+                  <p>
+                    Atualiza horarios de trabalho pelo id.
+                  </p>
+                  <p><strong>Exemplo:</strong></p>
+                  <pre>
+                      <code>
+                          http://localhost:2000/users/provider/working_yours/1
+                      </code>
+                    </pre>
+                </div>
+                <div class="col s12">
+                  <p><strong>Retorno:</strong></p>
+                  <pre>
+                      <code>
+                        Status 204 - No Content        
+                      </code>                                 
+                    </pre>
+                </div>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./params.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>
