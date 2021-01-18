@@ -1,4 +1,4 @@
-# API Severino
+# API
 Esta API, tem como objetivo fornecer os dados, validações e integrações para o Severino (TIC), WEB e Mobille. Os exemplos foram feitos utilizando o Axios e programação assincrona.
 
 ## Como rodar
